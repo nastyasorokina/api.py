@@ -6,7 +6,7 @@ import time
 
 
 config = {
-    'VK_ACCESS_TOKEN': 'e2909f04264c9a2415ebced5edf20f39c264df76536b6d9b78d47e1a8ba9a9b0d959146c1e2cf48a56aa3',
+    'VK_ACCESS_TOKEN': 'c312cc7346cf49ecd81f975cc25d502cf5cccf2780096e8cfed8b605b9e542c89b162e02130c80128a6d2',
     'PLOTLY_USERNAME': 'nastya_sorokina',
     'PLOTLY_API_KEY': 'Gyly1dLqEiVKnomV9tes',
     'CD': 27,
