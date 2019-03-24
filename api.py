@@ -24,7 +24,7 @@ def get(url, params={}, timeout=1, max_retries=5, backoff_factor=0.3):
     :param max_retries: максимальное число повторных запросов
     :param backoff_factor: коэффициент экспоненциального нарастания задержки"""
     for a in range(max_retries):
-        response = requests.get(url, params = params, timeout = timeout)
+        response = requests.get(url, params=params, timeout=timeout)
         if response.status_code == 200:
             break
         backoff_delay = backoff_factor * (2 ** (a - 1))
@@ -111,7 +111,7 @@ def date_number(bdate):
         a = a - 1
     bdate = bdate[:a]
     return num, bdate
-    
+
 
     def messages_get_history(user_id, count=20, offset=0):
     """ Получить историю переписки с указанным пользователем
@@ -173,7 +173,7 @@ def plotly_messages_freq(dalist, freqlist):
 def get_network(users_ids, as_edgelist=True):
     edgelist = []
     for i in users_ids:
-        hfriends = get_friends(i, fields = 'sex').json()
+        hfriends = get_friends(i, fields='sex').json()
         hfidlist = []
         for b in range(len(hfriends['response']['items'])):
             hfidlist.append(hfriends['response']['items'][b]['id'])
