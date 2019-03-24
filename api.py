@@ -13,6 +13,8 @@ config = {
     'CM': 10,
     'CY':2018
 }
+
+
 def get(url, params={}, timeout=1, max_retries=5, backoff_factor=0.3):
     """ Выполнить GET-запрос
 
@@ -57,7 +59,9 @@ def get_friends(user_id, fields='bdate'):
         return ans
     else:
         return None
-def age_predict(user_id):
+
+    
+    def age_predict(user_id):
     """ Наивный прогноз возраста по возрасту друзей
 
     Возраст считается как медиана среди возраста всех друзей пользователя
@@ -80,7 +84,8 @@ def age_predict(user_id):
     else:
         return rp
 
-def age(bdate):
+
+    def age(bdate):
     bdate = '.' + bdate
     year, bdate = date_number(bdate)
     month, bdate = date_number(bdate)
@@ -96,6 +101,7 @@ def age(bdate):
         age = config['CY'] - year
     return age
 
+
 def date_number(bdate):
     a = len(bdate) - 1
     num = 0
@@ -108,7 +114,8 @@ def date_number(bdate):
     bdate = bdate[:a]
     return num, bdate
     
-def messages_get_history(user_id, count=20, offset=0):
+
+    def messages_get_history(user_id, count=20, offset=0):
     """ Получить историю переписки с указанным пользователем
 
     :param user_id: идентификатор пользователя, с которым нужно получить историю переписки
@@ -132,6 +139,8 @@ def messages_get_history(user_id, count=20, offset=0):
     query = "{domain}/messages.getHistory?access_token={access_token}&offset={offset}&count={count}&user_id={user_id}&v=5.53".format(**query_params)
     meslst = get(query).json()
     return meslst
+
+
 def count_dates_from_messages(messages):
     """ Получить список дат и их частот
 
@@ -149,6 +158,7 @@ def count_dates_from_messages(messages):
             freqlist.append(1)
     return dalist, freqlist
 
+
 def plotly_messages_freq(dalist, freqlist):
     """ Построение графика с помощью Plot.ly
 
@@ -162,6 +172,7 @@ def plotly_messages_freq(dalist, freqlist):
     data = [go.Scatter(x=dalist,y=freqlist)]
     py.iplot(data)
     pass
+
 
 def get_network(users_ids, as_edgelist=True):
     edgelist = []
