@@ -11,7 +11,7 @@ config = {
     'PLOTLY_API_KEY': 'Gyly1dLqEiVKnomV9tes',
     'CD': 27,
     'CM': 10,
-    'CY':2018
+    'CY': 2018
 }
 
 
@@ -22,8 +22,8 @@ def get(url, params={}, timeout=1, max_retries=5, backoff_factor=0.3):
     :param params: параметры запроса
     :param timeout: максимальное время ожидания ответа от сервера
     :param max_retries: максимальное число повторных запросов
-    :param backoff_factor: коэффициент экспоненциального нарастания задержки
-    """ 
+    :param backoff_factor: коэффициент экспоненциального нарастания задержки"""
+    
     for a in range(max_retries):
         response = requests.get(url, params = params, timeout = timeout)
         if response.status_code == 200:
@@ -36,22 +36,23 @@ def get(url, params={}, timeout=1, max_retries=5, backoff_factor=0.3):
     else:
         return response
 
-def get_friends(user_id, fields='bdate'):
+
+    def get_friends(user_id, fields='bdate'):
     """ Вернуть данных о друзьях пользователя
 
     :param user_id: идентификатор пользователя, список друзей которого нужно получить
-    :param fields: список полей, которые нужно получить для каждого пользователя
-    """
+    :param fields: список полей, которые нужно получить для каждого пользователя"""
+    
     assert isinstance(user_id, int), "user_id must be positive integer"
     assert isinstance(fields, str), "fields must be string"
     assert user_id > 0, "user_id must be positive integer"
     access_token = '{VK_ACCESS_TOKEN}'.format(**config)
     domain = "https://api.vk.com/method"
     query_params = {
-    'domain': domain,
-    'access_token': access_token,
-    'user_id': user_id,
-    'fields': fields
+        'domain': domain,
+        'access_token': access_token,
+        'user_id': user_id,
+        'fields': fields
     }
     query = "{domain}/friends.get?access_token={access_token}&user_id={user_id}&fields={fields}&v=5.53".format(**query_params)
     ans = get(query)
@@ -66,9 +67,9 @@ def get_friends(user_id, fields='bdate'):
 
     Возраст считается как медиана среди возраста всех друзей пользователя
 
-    :param user_id: идентификатор пользователя
-    """
-    assert isinstance(user_id, int), "user_id must be positive integer"
+    :param user_id: идентификатор пользователя """
+   
+assert isinstance(user_id, int), "user_id must be positive integer"
     assert user_id > 0, "user_id must be positive integer"
     rp = get_friends(user_id)
     if rp:
@@ -120,8 +121,8 @@ def date_number(bdate):
 
     :param user_id: идентификатор пользователя, с которым нужно получить историю переписки
     :param offset: смещение в истории переписки
-    :param count: число сообщений, которое нужно получить
-    """
+    :param count: число сообщений, которое нужно получить"""
+    
     assert isinstance(user_id, int), "user_id must be positive integer"
     assert user_id > 0, "user_id must be positive integer"
     assert isinstance(offset, int), "offset must be positive integer"
@@ -130,11 +131,11 @@ def date_number(bdate):
     access_token = '{VK_ACCESS_TOKEN}'.format(**config)
     domain = "https://api.vk.com/method"
     query_params = {
-    'domain': domain,
-    'access_token': access_token,
-    'offset': offset,
-    'count': count,
-    'user_id': user_id
+        'domain': domain,
+        'access_token': access_token,
+        'offset': offset,
+        'count': count,
+        'user_id': user_id
     }
     query = "{domain}/messages.getHistory?access_token={access_token}&offset={offset}&count={count}&user_id={user_id}&v=5.53".format(**query_params)
     meslst = get(query).json()
@@ -144,8 +145,8 @@ def date_number(bdate):
 def count_dates_from_messages(messages):
     """ Получить список дат и их частот
 
-    :param messages: список сообщений
-    """
+    :param messages: список сообщений """
+    
     dalist = []
     freqlist = []
     for a in range(len(messages['response']['items'])):
