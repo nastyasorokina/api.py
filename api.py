@@ -1,12 +1,12 @@
-# api.py
-import requests
-from datetime import datetime
 import plotly
+import requests
 import time
+from datetime import datetime
 
 
 config = {
-    'VK_ACCESS_TOKEN': 'c312cc7346cf49ecd81f975cc25d502cf5cccf2780096e8cfed8b605b9e542c89b162e02130c80128a6d2',
+    'VK_ACCESS_TOKEN': 'c312cc7346cf49ecd81f975cc25d502c'
+    'f5cccf2780096e8cfed8b605b9e542c89b162e02130c80128a6d2',
     'PLOTLY_USERNAME': 'nastya_sorokina',
     'PLOTLY_API_KEY': 'Gyly1dLqEiVKnomV9tes',
     'CD': 27,
@@ -36,11 +36,7 @@ def get(url, params={}, timeout=1, max_retries=5, backoff_factor=0.3):
         return response
 
 
-    def get_friends(user_id, fields='bdate'):
-    """ Вернуть данных о друзьях пользователя
-
-    :param user_id: идентификатор пользователя, список друзей которого нужно получить
-    :param fields: список полей, которые нужно получить для каждого пользователя"""
+def get_friends(user_id, fields='bdate'):
     assert isinstance(user_id, int), "user_id must be positive integer"
     assert isinstance(fields, str), "fields must be string"
     assert user_id > 0, "user_id must be positive integer"
@@ -52,20 +48,16 @@ def get(url, params={}, timeout=1, max_retries=5, backoff_factor=0.3):
         'user_id': user_id,
         'fields': fields
     }
-    query = "{domain}/friends.get?access_token={access_token}&user_id={user_id}&fields={fields}&v=5.53".format(**query_params)
+    query = "{domain}/friends.get?access_token={access_token}"\
+            "&user_id={user_id}&fields={fields}&v=5.53".format(**query_params)
     ans = get(query)
     if ans:
         return ans
     else:
         return None
 
-    
-    def age_predict(user_id):
-    """ Наивный прогноз возраста по возрасту друзей
 
-    Возраст считается как медиана среди возраста всех друзей пользователя
-
-    :param user_id: идентификатор пользователя """
+def age_predict(user_id):
     assert isinstance(user_id, int), "user_id must be positive integer"
     assert user_id > 0, "user_id must be positive integer"
     rp = get_friends(user_id)
@@ -83,7 +75,7 @@ def get(url, params={}, timeout=1, max_retries=5, backoff_factor=0.3):
         return rp
 
 
-    def age(bdate):
+def age(bdate):
     bdate = '.' + bdate
     year, bdate = date_number(bdate)
     month, bdate = date_number(bdate)
@@ -113,12 +105,7 @@ def date_number(bdate):
     return num, bdate
 
 
-    def messages_get_history(user_id, count=20, offset=0):
-    """ Получить историю переписки с указанным пользователем
-
-    :param user_id: идентификатор пользователя, с которым нужно получить историю переписки
-    :param offset: смещение в истории переписки
-    :param count: число сообщений, которое нужно получить"""
+def messages_get_history(user_id, count=20, offset=0):
     assert isinstance(user_id, int), "user_id must be positive integer"
     assert user_id > 0, "user_id must be positive integer"
     assert isinstance(offset, int), "offset must be positive integer"
@@ -133,16 +120,14 @@ def date_number(bdate):
         'count': count,
         'user_id': user_id
     }
-    query = "{domain}/messages.getHistory?access_token={access_token}&offset={offset}&count={count}&user_id={user_id}&v=5.53".format(**query_params)
+    query = "{domain}/messages.getHistory?access_token"\
+            "={access_token}&offset={offset}"\
+            "&count={count}&user_id={user_id}&v=5.53".format(**query_params)
     meslst = get(query).json()
     return meslst
 
 
 def count_dates_from_messages(messages):
-    """ Получить список дат и их частот
-
-    :param messages: список сообщений """
-    
     dalist = []
     freqlist = []
     for a in range(len(messages['response']['items'])):
@@ -157,9 +142,6 @@ def count_dates_from_messages(messages):
 
 
 def plotly_messages_freq(dalist, freqlist):
-    """ Построение графика с помощью Plot.ly
-
-    :param freq_list: список дат и их частот"""
     username = '{PLOTLY_USERNAME}'.format(**config)
     api_key = '{PLOTLY_API_KEY}'.format(**config)
     plotly.tools.set_credentials_file(username=username, api_key=api_key)
@@ -197,7 +179,8 @@ def plot_graph(graph):
     nx.draw(G)
     pass
 
+
 if __name__ == "__main__":
     meslst = messages_get_history(204749327, 350)
     dalist, freqlist = count_dates_from_messages(meslst)
-    plotly_messages_freq(dalist, freqlist)'''
+    plotly_messages_freq(dalist, freqlist)
