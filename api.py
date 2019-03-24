@@ -23,7 +23,6 @@ def get(url, params={}, timeout=1, max_retries=5, backoff_factor=0.3):
     :param timeout: максимальное время ожидания ответа от сервера
     :param max_retries: максимальное число повторных запросов
     :param backoff_factor: коэффициент экспоненциального нарастания задержки"""
-    
     for a in range(max_retries):
         response = requests.get(url, params = params, timeout = timeout)
         if response.status_code == 200:
@@ -42,7 +41,6 @@ def get(url, params={}, timeout=1, max_retries=5, backoff_factor=0.3):
 
     :param user_id: идентификатор пользователя, список друзей которого нужно получить
     :param fields: список полей, которые нужно получить для каждого пользователя"""
-    
     assert isinstance(user_id, int), "user_id must be positive integer"
     assert isinstance(fields, str), "fields must be string"
     assert user_id > 0, "user_id must be positive integer"
@@ -68,8 +66,7 @@ def get(url, params={}, timeout=1, max_retries=5, backoff_factor=0.3):
     Возраст считается как медиана среди возраста всех друзей пользователя
 
     :param user_id: идентификатор пользователя """
-   
-assert isinstance(user_id, int), "user_id must be positive integer"
+    assert isinstance(user_id, int), "user_id must be positive integer"
     assert user_id > 0, "user_id must be positive integer"
     rp = get_friends(user_id)
     if rp:
@@ -122,7 +119,6 @@ def date_number(bdate):
     :param user_id: идентификатор пользователя, с которым нужно получить историю переписки
     :param offset: смещение в истории переписки
     :param count: число сообщений, которое нужно получить"""
-    
     assert isinstance(user_id, int), "user_id must be positive integer"
     assert user_id > 0, "user_id must be positive integer"
     assert isinstance(offset, int), "offset must be positive integer"
@@ -163,8 +159,7 @@ def count_dates_from_messages(messages):
 def plotly_messages_freq(dalist, freqlist):
     """ Построение графика с помощью Plot.ly
 
-    :param freq_list: список дат и их частот
-    """
+    :param freq_list: список дат и их частот"""
     username = '{PLOTLY_USERNAME}'.format(**config)
     api_key = '{PLOTLY_API_KEY}'.format(**config)
     plotly.tools.set_credentials_file(username=username, api_key=api_key)
