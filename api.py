@@ -165,7 +165,7 @@ def plotly_messages_freq(dalist, freqlist):
     plotly.tools.set_credentials_file(username=username, api_key=api_key)
     import plotly.plotly as py
     import plotly.graph_objs as go
-    data = [go.Scatter(x=dalist,y=freqlist)]
+    data = [go.Scatter(x=dalist, y=freqlist)]
     py.iplot(data)
     pass
 
@@ -178,7 +178,7 @@ def get_network(users_ids, as_edgelist=True):
         for b in range(len(hfriends['response']['items'])):
             hfidlist.append(hfriends['response']['items'][b]['id'])
         for c in users_ids:
-           if c in hfidlist:
+            if c in hfidlist:
                 tup = (users_ids.index(i), users_ids.index(c))
                 edgelist.append(tup)
     for d in range(len(edgelist) // 2):
